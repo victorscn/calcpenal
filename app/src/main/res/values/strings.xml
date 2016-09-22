@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">Calculadora Penal</string>
+    <string name="ano_main">Anos</string>
+    <string name="mes_main">Meses</string>
+    <string name="dia_main">Dias</string>
+
+    <!--Used to populate the spinner-->
+    <string-array name="operations_array">
+        <item>+</item>
+        <item>-</item>
+    </string-array>
+
+</resources>
