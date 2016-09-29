@@ -1,6 +1,123 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    android:layout_margin="16dp"
+    android:orientation="vertical">
 
+<!--
+    <TextView
+        android:id="@+id/sentence_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:text="@string/sentence_dialog_title" />
+-->
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="36dp"
+            android:layout_marginTop="10dp">
+
+            <TextView
+                android:id="@+id/title_year"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:text="@string/year_text" />
+
+            <com.shawnlin.numberpicker.NumberPicker
+                android:id="@+id/year_sentence"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/title_year"
+                app:np_dividerColor="@color/colorPrimary"
+                app:np_height="160dp"
+                app:np_max="30"
+                app:np_min="0"
+                app:np_orientation="vertical"
+                app:np_textColor="@color/colorPrimary"
+                app:np_textSize="16sp"
+                app:np_width="64dp" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="36dp"
+            android:layout_marginTop="10dp">
+
+            <TextView
+                android:id="@+id/title_month"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:text="@string/month_text" />
+
+            <com.shawnlin.numberpicker.NumberPicker
+                android:id="@+id/month_sentence"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/title_month"
+                app:np_dividerColor="@color/colorPrimary"
+                app:np_height="160dp"
+                app:np_max="12"
+                app:np_min="0"
+                app:np_orientation="vertical"
+                app:np_textColor="@color/colorPrimary"
+                app:np_textSize="16sp"
+                app:np_width="64dp" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp">
+
+            <TextView
+                android:id="@+id/title_day"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:text="@string/day_text" />
+
+
+            <com.shawnlin.numberpicker.NumberPicker
+                android:id="@+id/day_sentence"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/title_day"
+                app:np_dividerColor="@color/colorPrimary"
+                app:np_height="160dp"
+                app:np_max="30"
+                app:np_min="0"
+                app:np_orientation="vertical"
+                app:np_textColor="@color/colorPrimary"
+                app:np_textSize="16sp"
+                app:np_width="64dp" />
+        </RelativeLayout>
+
+
+    </LinearLayout>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        android:layout_marginTop="16dp"
+        android:id="@+id/sentence_button"
+        android:text="@string/sentence_button_text"
+        android:background="@color/greenSpot"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        />
 </LinearLayout>

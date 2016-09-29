@@ -1,8 +1,19 @@
 <resources>
     <string name="app_name">Calculadora Penal</string>
-    <string name="ano_main">Anos</string>
-    <string name="mes_main">Meses</string>
-    <string name="dia_main">Dias</string>
+    <string name="year_main">Anos</string>
+    <string name="month_main">Meses</string>
+    <string name="day_main">Dias</string>
+
+    <string name="fraction_dialog_title">Selecione a fração desejada</string>
+    <string name="fraction_button">Adicionar</string>
+    <string name="list_button_ok">Calcular</string>
+    <string name="list_button_clear">Limpar</string>
+
+    <string name="sentence_dialog_title">Selecione a pena</string>
+    <string name="year_text">Ano</string>
+    <string name="month_text">Mês</string>
+    <string name="day_text">Dia</string>
+    <string name="sentence_button_text">Prosseguir</string>
 
     <!--Used to populate the spinner-->
     <string-array name="operations_array">

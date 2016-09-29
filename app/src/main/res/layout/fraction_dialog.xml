@@ -1,5 +1,83 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="300dp"
+    android:layout_height="300dp">
 
+    <TextView
+        android:id="@+id/fraction_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="16dp"
+        android:text="@string/fraction_dialog_title" />
+
+    <!--TODO funtion to pass the values to text on activity_main-->
+    <LinearLayout
+        android:id="@+id/fraction_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/fraction_title"
+        android:layout_centerHorizontal="true"
+        android:orientation="horizontal"        >
+
+        <Spinner
+            android:id="@+id/is_sum_spinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!--TODO Change to style to clean the code-->
+
+            <com.shawnlin.numberpicker.NumberPicker
+                android:id="@+id/numerator_picker"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                app:np_dividerColor="@color/colorPrimary"
+                app:np_height="64dp"
+                app:np_max="9"
+                app:np_min="1"
+                app:np_orientation="horizontal"
+                app:np_textColor="@color/colorPrimary"
+                app:np_textSize="16sp"
+                app:np_width="160dp" />
+
+            <View
+                android:layout_width="200dp"
+                android:layout_height="1dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
+                android:background="@android:color/darker_gray" />
+
+            <com.shawnlin.numberpicker.NumberPicker
+                android:id="@+id/denominator_picker"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                app:np_dividerColor="@color/colorPrimary"
+                app:np_height="64dp"
+                app:np_max="9"
+                app:np_min="1"
+                app:np_orientation="horizontal"
+                app:np_textColor="@color/colorPrimary"
+                app:np_textSize="16sp"
+                app:np_width="160dp" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/fraction_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/fraction_layout"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="16dp"
+        android:text="@string/fraction_button" />
 </RelativeLayout>

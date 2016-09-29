@@ -6,34 +6,49 @@ package com.example.android.calculadorapenal;
 
 public class Operation {
 
-//  Will hold the numerator for the operation
+    //  Will hold the numerator for the operation
     private int numerator;
 
-//  Will hold the denominator for the operation
+    //  Will hold the denominator for the operation
     private int denominator;
 
-//  Will hold the value for the sum or subtraction
-    private boolean isSum;
+    //  Will hold the value for the sum or subtraction
+    private String isSum;
 
     /*Constructs a new Operation with values set by the user*/
 
-    public Operation(int numerator, int denominator, boolean isSum){
+    public Operation(int numerator, int denominator, String isSum) {
         this.numerator = numerator;
         this.denominator = denominator;
         this.isSum = isSum;
     }
 
+    //Change the numerator
+    public void setNumerator(int newNumerator) {
+        numerator = newNumerator;
+    }
+
+    //Change the denominator
+    public void setDenominator(int newDenominator) {
+        denominator = newDenominator;
+    }
+
+    public void setIsSum(String newIsSum) {
+        isSum = newIsSum;
+    }
+
     /*@return the numerator value*/
-    public int getNumerator(){
+    public int getNumerator() {
         return numerator;
     }
 
     /*@return the denominator value*/
-    public int getDenominator(){
+    public int getDenominator() {
         return denominator;
     }
 
-    public boolean getIsSum(){
+    /*@return the if the signal is positive of negative*/
+    public String getIsSum() {
         return isSum;
     }
 }
