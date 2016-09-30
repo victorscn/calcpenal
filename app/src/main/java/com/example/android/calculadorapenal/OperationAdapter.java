@@ -53,16 +53,18 @@ public class OperationAdapter extends ArrayAdapter<Operation> {
         TextView denominatorText = (TextView) listItemView.findViewById(R.id.denominator);
         denominatorText.setText(String.valueOf(currentOperation.getDenominator()));
 
+        /*Fint the TextView for the sentence text and populates*/
+        TextView sentenceText = (TextView) listItemView.findViewById(R.id.sentence);
+        sentenceText.setText(currentOperation.writeResult());
 
         /*Find the TextView isSum in expanded_item and populates*/
         TextView isSumText = (TextView) listItemView.findViewById(R.id.isSum);
         isSumText.setText(currentOperation.getIsSum());
-        ;
+
 
 
         return listItemView;
     }
-
 
 
 }

@@ -11,64 +11,61 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.example.android.calculadorapenal.MainActivity">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="@string/year_main" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="@string/month_main" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="@string/day_main" />
-
-    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/sentence_main"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="10dp">
+        android:layout_marginBottom="16dp"
+        android:orientation="horizontal">
 
-
-        <TextView
-            android:id="@+id/year_sentence_main"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:gravity="center"
-            android:text="0" />
+            android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/month_sentence_main"
+            <TextView
+                style="@style/sentence_title"
+                android:text="@string/year_main" />
+
+            <TextView
+                android:id="@+id/year_sentence_main"
+                style="@style/sentence_number"
+                android:text="0" />
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:gravity="center"
-            android:text="0" />
+            android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/day_sentence_main"
+            <TextView
+                style="@style/sentence_title"
+                android:text="@string/month_main" />
+
+            <TextView
+                android:id="@+id/month_sentence_main"
+                style="@style/sentence_number"
+                android:text="0" />
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:gravity="center"
-            android:text="0" />
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/sentence_title"
+                android:text="@string/day_main" />
+
+            <TextView
+                android:id="@+id/day_sentence_main"
+                style="@style/sentence_number"
+                android:text="0" />
+        </LinearLayout>
 
 
     </LinearLayout>
@@ -78,11 +75,14 @@
         android:id="@+id/addBtn"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="6dp"
+        android:background="@color/greenSpot"
         android:onClick="addItems"
-        android:text="Add" />
+        android:text="@string/main_button_add"
+        android:textColor="@color/white"
+        android:textStyle="bold" />
 
-    <!--TODO Adicionar botão com addFooterView no adaptador-->
-    <!--Provavelmente precisará de uma atividade para o botao-->
+
     <ListView
         android:id="@+id/list"
         android:layout_width="match_parent"

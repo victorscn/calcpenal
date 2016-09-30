@@ -1,53 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="12dp">
+    android:layout_marginTop="12dp"
+    android:orientation="horizontal">
 
     <TextView
-        android:layout_margin="16sp"
+        android:id="@+id/isSum"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/isSum"
-        tools:text="+"
+        android:layout_margin="16sp"
         android:textSize="18sp"
-        />
+        tools:text="+" />
 
     <!--TODO change to roll list-->
-   <LinearLayout
-       android:layout_width="wrap_content"
-       android:layout_height="wrap_content"
-       android:orientation="vertical">
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
         <TextView
+            android:id="@+id/numerator"
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:layout_margin="10dp"
             android:textSize="18sp"
-            tools:text="1"
-            android:id="@+id/numerator"/>
+            tools:text="1" />
 
         <View
             android:layout_width="30dp"
             android:layout_height="1dp"
             android:background="@android:color/darker_gray" />
 
-       <TextView
-           android:layout_width="20dp"
-           android:layout_height="20dp"
-           android:layout_margin="10dp"
-           android:textSize="18sp"
-           tools:text="6"
-           android:id="@+id/denominator"/>
-   </LinearLayout>
+        <TextView
+            android:id="@+id/denominator"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_margin="10dp"
+            android:textSize="18sp"
+            tools:text="6" />
+    </LinearLayout>
     <!--end todo-->
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        tools:text="4 meses e 20 dias"
+        android:layout_marginLeft="24dp"
         android:paddingTop="12dp"
-        android:layout_marginLeft="24dp"/>
+        android:id="@+id/sentence"
+        tools:text="4 meses e 20 dias" />
 </LinearLayout>

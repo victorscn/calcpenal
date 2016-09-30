@@ -15,12 +15,22 @@ public class Operation {
     //  Will hold the value for the sum or subtraction
     private String isSum;
 
+    //  Will hold the result sentence
+    private Sentence sentence;
+
     /*Constructs a new Operation with values set by the user*/
 
     public Operation(int numerator, int denominator, String isSum) {
         this.numerator = numerator;
         this.denominator = denominator;
         this.isSum = isSum;
+    }
+
+    public Operation(int numerator, int denominator, String isSum, Sentence sentence){
+        this.numerator = numerator;
+        this.denominator = denominator;
+        this.isSum = isSum;
+        this.sentence=sentence.newSentence(numerator,denominator,isSum);
     }
 
     //Change the numerator
@@ -51,4 +61,31 @@ public class Operation {
     public String getIsSum() {
         return isSum;
     }
+
+    //Change base sentence
+    public void setBaseSentence(Sentence sentence){
+        this.sentence=sentence.newSentence(numerator,denominator,isSum);
+    }
+
+    public int getYear(){
+        if (sentence!=null)
+        return sentence.getYear();
+        return 0;
+    }
+     public int getMonth(){
+         if (sentence!=null)
+         return sentence.getMonth();
+         return 0;
+     }
+    public int getDay(){
+        if (sentence!=null)
+        return sentence.getYear();
+        return 0;
+    }
+    public String writeResult(){
+        if (sentence!=null)
+        return sentence.writeSentence();
+        return "N/A";
+    }
+
 }
