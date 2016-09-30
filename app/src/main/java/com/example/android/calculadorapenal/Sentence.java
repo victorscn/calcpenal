@@ -55,23 +55,12 @@ public class Sentence {
         Sentence resultSentence;
         sentenceDays = dateToDays(year, month, day);
 
-        if (isSum.equals("+")) {
-
-            sentenceDays = (int) (((double) numerator / denominator) * sentenceDays) + sentenceDays;
-
+            sentenceDays=(int)(((double)numerator/denominator)*sentenceDays);
             newYear = (int) ((double) sentenceDays / DAYS_TO_YEAR);
             sentenceDays = sentenceDays - newYear * DAYS_TO_YEAR;
             newMonth = (int) ((double) sentenceDays / DAYS_TO_MONTH);
             sentenceDays = sentenceDays - newMonth * DAYS_TO_MONTH;
 
-        } else {
-            sentenceDays = sentenceDays - (int) (((double) numerator / denominator) * sentenceDays);
-
-            newYear = (int) ((double) sentenceDays / DAYS_TO_YEAR);
-            sentenceDays = sentenceDays - newYear * DAYS_TO_YEAR;
-            newMonth = (int) ((double) sentenceDays / DAYS_TO_MONTH);
-            sentenceDays = sentenceDays - newMonth * DAYS_TO_MONTH;
-        }
 
         resultSentence = new Sentence(newYear, newMonth, sentenceDays);
 
@@ -91,16 +80,16 @@ public class Sentence {
         if (getMonth() == 0)
             return "";
         else if (getMonth() == 1) {
-            return getDay() + " mês";
-        } else return getDay() + " meses";
+            return getMonth() + " mês";
+        } else return getMonth() + " meses";
     }
 
     private String writeYear() {
         if (getYear() == 0)
             return "";
-        else if (getDay() == 1) {
-            return getDay() + " ano";
-        } else return getDay() + " anos";
+        else if (getYear() == 1) {
+            return getYear()+ " ano";
+        } else return getYear() + " anos";
     }
 
     public String writeSentence() {
@@ -118,7 +107,7 @@ public class Sentence {
             return writeYear() + " e " + writeDay();
         else if (getDay() == 0)
             return writeYear() + " e " + writeMonth();
-        else return writeYear() + " e " + writeMonth() + "e" + writeDay();
+        else return writeYear() + " e " + writeMonth() + " e " + writeDay();
     }
 }
 
