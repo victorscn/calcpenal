@@ -129,7 +129,8 @@ public class MainActivity extends AppCompatActivity {
 
     //Method that handles the dynamic insertion
     public void addItems(View v) {
-        adapter.add(new Operation(0, 0, DEFAULT_IS_SUM_VALUE));
+        adapter.add(new Operation(0, 0, DEFAULT_IS_SUM_VALUE))
+        ;
     }
 
     /*Method that opens the sentence dialog tho choose a number*/

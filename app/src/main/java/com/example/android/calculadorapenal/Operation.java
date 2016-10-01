@@ -85,7 +85,7 @@ public class Operation {
     public String writeResult(){
         if (sentence!=null)
         return sentence.writeSentence();
-        return "N/A";
+        return "";
     }
 
 }

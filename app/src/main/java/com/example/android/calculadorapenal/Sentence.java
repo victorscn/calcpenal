@@ -94,7 +94,7 @@ public class Sentence {
 
     public String writeSentence() {
         if(getDaysOfSentence()==0)
-            return "Sem sentença";
+            return "";
         if (getDaysOfSentence() < 30)
             return writeDay();
         else if (getDaysOfSentence() < 365) {

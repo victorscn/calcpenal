@@ -8,17 +8,20 @@
 
     <TextView
         android:id="@+id/isSum"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="24dp"
+        android:layout_height="match_parent"
         android:layout_margin="16sp"
         android:textSize="18sp"
+        android:gravity="center"
+        android:layout_weight="0"
         tools:text="+" />
 
-    <!--TODO change to roll list-->
+
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:layout_weight="1">
 
         <TextView
             android:id="@+id/numerator"
@@ -41,13 +44,15 @@
             android:textSize="18sp"
             tools:text="6" />
     </LinearLayout>
-    <!--end todo-->
+
 
     <TextView
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="24dp"
-        android:paddingTop="12dp"
+        android:layout_height="match_parent"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:textAppearance="?android:textAppearanceListItemSmall"
         android:id="@+id/sentence"
+        android:gravity="center_vertical"
         tools:text="4 meses e 20 dias" />
 </LinearLayout>
