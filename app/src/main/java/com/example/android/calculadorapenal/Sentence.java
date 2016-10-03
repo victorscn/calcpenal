@@ -1,5 +1,7 @@
 package com.example.android.calculadorapenal;
 
+import org.jetbrains.annotations.Contract;
+
 /**
  * Created by victo on 29/09/2016.
  */
@@ -25,6 +27,22 @@ public class Sentence {
 
     }
 
+    //@input days of sentence and they are transformed to a formal sentence
+    public Sentence(int days){
+        int sentence = days;
+        if (days>=DAYS_TO_YEAR){
+            year=(int)((double)days/DAYS_TO_YEAR);
+            sentence = sentence - (year * DAYS_TO_YEAR);
+        }
+        if (sentence>=DAYS_TO_MONTH){
+            month=(int)((double)sentence/DAYS_TO_MONTH);
+            sentence = sentence - (month * DAYS_TO_MONTH);
+        }
+        if(sentence>0){
+            day=sentence;
+        }
+    }
+
     public int getYear() {
         return year;
     }
@@ -41,6 +59,7 @@ public class Sentence {
         return dateToDays(year, month, day);
     }
 
+    @Contract(pure = true)
     private int dateToDays(int years, int months, int days) {
         days = days + months * 30 + years * 365;
         return days;

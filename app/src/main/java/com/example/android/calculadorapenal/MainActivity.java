@@ -38,10 +38,23 @@ public class MainActivity extends AppCompatActivity {
         final TextView monthSentenceText = (TextView) findViewById(R.id.month_sentence_main);
         final TextView daySentenceText = (TextView) findViewById(R.id.day_sentence_main);
 
-
+        //Initializing result textbox
+        final TextView resultSentence = (TextView) findViewById(R.id.result);
 
         ListView sumList = (ListView) findViewById(R.id.list);
-        sumList.addFooterView(View.inflate(this, R.layout.compute_button, null));
+
+        //Footer settings
+        View footer = View.inflate(this, R.layout.compute_button, null);
+        TextView computeButton = (TextView) footer.findViewById(R.id.compute_button);
+        computeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showResult(resultSentence);
+            }
+        });
+
+        sumList.addFooterView(footer);
+
 
         //Adapter initialization and list setup
         adapter = new OperationAdapter(this, operations);
@@ -55,6 +68,7 @@ public class MainActivity extends AppCompatActivity {
                 showSentenceDialog(yearSentenceText, monthSentenceText, daySentenceText);
             }
         });
+
 
 
         //Setup dialog for fractions
@@ -175,5 +189,32 @@ public class MainActivity extends AppCompatActivity {
         sentenceDialog.show();
     }
 
+    /*Show the result sentence TextView*/
+    public void showResult(TextView resultSentence){
+        if (sentence!=null){
+            resultSentence.setText(finalSentence());
+            resultSentence.setVisibility(View.VISIBLE);
+        }
+
+    }
+
+    /*Calculates the result sentence, does not check if sentence is null*/
+    private String finalSentence(){
+        int daysOfSentence=sentence.getDaysOfSentence();
+        int position;
+        Operation currentOperation;
+
+        if (sentence!=null)
+        for (position=0;position!=operations.size();position++){
+            currentOperation=operations.get(position);
+            daysOfSentence+=currentOperation.getDaysOfSentence();
+        }
+
+        Sentence finalSentence = new Sentence(daysOfSentence);
+
+
+        return finalSentence.writeSentence();
+
+    }
 
 }

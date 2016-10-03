@@ -4,7 +4,7 @@
     android:layout_height="wrap_content"
     android:orientation="horizontal">
 
-    <Button
+    <TextView
         android:layout_width="110dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -15,9 +15,11 @@
         android:textAllCaps="true"
         android:textColor="@color/white"
         android:textSize="16sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:clickable="true"
+        android:focusable="true"/>
 
-    <Button
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -28,6 +30,9 @@
         android:textAllCaps="true"
         android:textColor="@color/white"
         android:textSize="16sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:clickable="true"
+        android:focusable="true"
+        android:id="@+id/compute_button"/>
 
 </LinearLayout>

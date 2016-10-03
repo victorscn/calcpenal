@@ -82,6 +82,11 @@ public class Operation {
         return sentence.getYear();
         return 0;
     }
+    public int getDaysOfSentence(){
+        if(sentence!=null)
+            return sentence.getDaysOfSentence();
+        return 0;
+    }
     public String writeResult(){
         if (sentence!=null)
         return sentence.writeSentence();

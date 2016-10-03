@@ -100,7 +100,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         tools:text="teste"
-        android:textSize="24sp"
+        android:gravity="center_horizontal"
+        android:textSize="18sp"
         android:visibility="gone"/>
 
 
