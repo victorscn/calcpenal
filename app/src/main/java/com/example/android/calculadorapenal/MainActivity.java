@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
         //Initializing result textbox
         final TextView resultSentence = (TextView) findViewById(R.id.result);
 
-        ListView sumList = (ListView) findViewById(R.id.list);
+        final ListView sumList = (ListView) findViewById(R.id.list);
 
         //Footer settings
         View footer = View.inflate(this, R.layout.compute_button, null);
@@ -60,6 +60,8 @@ public class MainActivity extends AppCompatActivity {
         adapter = new OperationAdapter(this, operations);
         sumList.setAdapter(adapter);
 
+
+
         //Setup dialog to show when the sentence is clicked
         LinearLayout sentenceLayout = (LinearLayout) findViewById(R.id.sentence_main);
         sentenceLayout.setOnClickListener(new View.OnClickListener() {
@@ -68,6 +70,21 @@ public class MainActivity extends AppCompatActivity {
                 showSentenceDialog(yearSentenceText, monthSentenceText, daySentenceText);
             }
         });
+
+//TODO make the remove dialog
+/*
+        sumList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long id) {
+                final int actualPosition = position;
+                final Dialog removeDialog = new Dialog(MainActivity.this);
+                removeDialog.setContentView(R.layout.remove_dialog);
+
+
+                return false;
+            }
+        });
+*/
 
 
 
@@ -116,6 +133,24 @@ public class MainActivity extends AppCompatActivity {
                 fractionDialog.show();
             }
         });
+
+        //Setting up add button
+        Button addBtn = (Button) findViewById(R.id.addBtn);
+        addBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                adapter.add(new Operation(0, 0, DEFAULT_IS_SUM_VALUE));
+                clickAfter(sumList,operations.size());
+
+            }
+        });
+
+
+    }
+    //Opens the fraction dialog after the list item is added
+    private void clickAfter(ListView sumList, int lastPos){
+        sumList.performItemClick(sumList.getChildAt(lastPos-1),lastPos-1,sumList.getAdapter().getItemId(lastPos-1));
     }
 
     public void setMainSentence(int year, int month, int day){
@@ -136,15 +171,7 @@ public class MainActivity extends AppCompatActivity {
         adapter.notifyDataSetChanged();
 
 
-        //TODO update de list
 
-    }
-
-
-    //Method that handles the dynamic insertion
-    public void addItems(View v) {
-        adapter.add(new Operation(0, 0, DEFAULT_IS_SUM_VALUE))
-        ;
     }
 
     /*Method that opens the sentence dialog tho choose a number*/
@@ -207,7 +234,9 @@ public class MainActivity extends AppCompatActivity {
         if (sentence!=null)
         for (position=0;position!=operations.size();position++){
             currentOperation=operations.get(position);
+            if(currentOperation.getIsSum().equals("+"))
             daysOfSentence+=currentOperation.getDaysOfSentence();
+            else daysOfSentence-=currentOperation.getDaysOfSentence();
         }
 
         Sentence finalSentence = new Sentence(daysOfSentence);

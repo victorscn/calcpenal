@@ -16,6 +16,10 @@
     <string name="day_text">Dia</string>
     <string name="sentence_button_text">Prosseguir</string>
 
+    <string name="remove_dialog_message">Deseja remover operação?</string>
+    <string name="remove_dialog_ok">Sim</string>
+    <string name="remove_dialog_cancel">Cancelar</string>
+
     <!--Used to populate the spinner-->
     <string-array name="operations_array">
         <item>+</item>

@@ -82,7 +82,6 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="6dp"
         android:background="@color/greenSpot"
-        android:onClick="addItems"
         android:text="@string/main_button_add"
         android:textColor="@color/white"
         android:textStyle="bold" />
