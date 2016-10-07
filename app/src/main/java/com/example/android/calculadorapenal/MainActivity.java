@@ -1,12 +1,19 @@
 package com.example.android.calculadorapenal;
 
 import android.app.Dialog;
+import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Spinner;
@@ -29,9 +36,17 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        //Set the toolbar and status bar
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                | View.SYSTEM_UI_FLAG_FULLSCREEN);
+
 
         //Set the content of the activity to use the activity_main.xml layout file
         setContentView(R.layout.activity_main);
+
+
 
         // Initializing sentence textview for the dialog
         final TextView yearSentenceText = (TextView) findViewById(R.id.year_sentence_main);
@@ -96,15 +111,27 @@ public class MainActivity extends AppCompatActivity {
                 final int actualPosition = position;
                 final Dialog fractionDialog = new Dialog(MainActivity.this);
                 fractionDialog.setContentView(R.layout.fraction_dialog);
+                fractionDialog.setTitle(getString(R.string.fraction_dialog_title));
 
                 Button enterNumber = (Button) fractionDialog.findViewById(R.id.fraction_button);
 
                 //Populates Spinner on the fraction dialog
-                Spinner operationSpinner = (Spinner) fractionDialog.findViewById(R.id.is_sum_spinner);
+               final Spinner operationSpinner = (Spinner) fractionDialog.findViewById(R.id.is_sum_spinner);
                 ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(MainActivity.this,
                         R.array.operations_array, android.R.layout.simple_spinner_item);
                 adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 operationSpinner.setAdapter(adapter);
+
+                final NumberPicker numeratorPicker =
+                        (com.shawnlin.numberpicker.NumberPicker) fractionDialog.findViewById(R.id.numerator_picker);
+                final NumberPicker denominatorPicker =
+                        (com.shawnlin.numberpicker.NumberPicker) fractionDialog.findViewById(R.id.denominator_picker);
+
+
+                numeratorPicker.setValue(operations.get(actualPosition).getNumerator());
+                denominatorPicker.setValue(operations.get(actualPosition).getDenominator());
+                operationSpinner.setSelection(adapter.getPosition(operations.get(actualPosition).getIsSum()));
+
 
 
                 /*Opens the fraction dialog tho choose a number and send send chosen values to
@@ -115,13 +142,8 @@ public class MainActivity extends AppCompatActivity {
                     public void onClick(View view) {
 
 
-                        NumberPicker numeratorPicker =
-                                (com.shawnlin.numberpicker.NumberPicker) fractionDialog.findViewById(R.id.numerator_picker);
-                        NumberPicker denominatorPicker =
-                                (com.shawnlin.numberpicker.NumberPicker) fractionDialog.findViewById(R.id.denominator_picker);
-                        Spinner isSumSpinner = (Spinner) fractionDialog.findViewById(R.id.is_sum_spinner);
 
-                        changeValues(isSumSpinner.getSelectedItem().toString(),
+                        changeValues(operationSpinner.getSelectedItem().toString(),
                                 numeratorPicker.getValue(), denominatorPicker.getValue(),
                                 actualPosition, yearSentenceText, monthSentenceText,daySentenceText);
 
@@ -143,9 +165,32 @@ public class MainActivity extends AppCompatActivity {
                 adapter.add(new Operation(0, 0, DEFAULT_IS_SUM_VALUE));
                 clickAfter(sumList,operations.size());
 
+
             }
         });
 
+        //Set the image in the toolbar
+        final ImageView bImageView = (ImageView) findViewById(R.id.bg_image);
+
+/*
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inJustDecodeBounds = true;
+        BitmapFactory.decodeResource(getResources(), R.drawable.justica, options);
+*/
+        ViewTreeObserver vto = bImageView.getViewTreeObserver();
+
+        vto.addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
+            @Override
+            public boolean onPreDraw() {
+                bImageView.getViewTreeObserver().removeOnPreDrawListener(this);
+                Log.v("teste","Width: "+ Integer.toString(bImageView.getMeasuredHeight()));
+                bImageView.setImageBitmap(
+                        decodeSampledBitmapFromResource(getResources(),
+                                R.drawable.justica,bImageView.getMeasuredWidth(),bImageView.getMeasuredHeight()));
+
+                return true;
+            }
+        });
 
     }
     //Opens the fraction dialog after the list item is added
@@ -244,6 +289,63 @@ public class MainActivity extends AppCompatActivity {
 
         return finalSentence.writeSentence();
 
+    }
+
+    public void clear(View v){
+        operations.clear();
+        TextView result = (TextView) findViewById(R.id.result);
+        TextView yearSentenceText = (TextView) findViewById(R.id.year_sentence_main);
+        TextView monthSentenceText = (TextView) findViewById(R.id.month_sentence_main);
+        TextView daySentenceText = (TextView) findViewById(R.id.day_sentence_main);
+        result.setVisibility(View.GONE);
+        sentence = new Sentence(0,0,0);
+
+        yearSentenceText.setText("0");
+        monthSentenceText.setText("0");
+        daySentenceText.setText("0");
+        adapter.notifyDataSetChanged();
+
+    }
+
+    //Image loading: Loads a scaled down version into Memory
+
+    public static int calculateInSampleSize(
+            BitmapFactory.Options options, int reqWidth, int reqHeight) {
+        // Raw height and width of image
+        final int height = options.outHeight;
+        final int width = options.outWidth;
+        int inSampleSize = 1;
+
+        if (height > reqHeight || width > reqWidth) {
+
+            final int halfHeight = height / 2;
+            final int halfWidth = width / 2;
+
+            // Calculate the largest inSampleSize value that is a power of 2 and keeps both
+            // height and width larger than the requested height and width.
+            while ((halfHeight / inSampleSize) >= reqHeight
+                    && (halfWidth / inSampleSize) >= reqWidth) {
+                inSampleSize *= 2;
+            }
+        }
+
+        return inSampleSize;
+    }
+
+    public static Bitmap decodeSampledBitmapFromResource(Resources res, int resId,
+                                                         int reqWidth, int reqHeight) {
+
+        // First decode with inJustDecodeBounds=true to check dimensions
+        final BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inJustDecodeBounds = true;
+        BitmapFactory.decodeResource(res, resId, options);
+
+        // Calculate inSampleSize
+        options.inSampleSize = calculateInSampleSize(options, reqWidth, reqHeight);
+
+        // Decode bitmap with inSampleSize set
+        options.inJustDecodeBounds = false;
+        return BitmapFactory.decodeResource(res, resId, options);
     }
 
 }
