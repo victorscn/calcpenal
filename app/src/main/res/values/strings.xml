@@ -4,7 +4,7 @@
     <string name="month_main">Meses</string>
     <string name="day_main">Dias</string>
     <string name="main_button_add">Adicionar</string>
-    <string name="clear_button">Limpa sentença</string>
+    <string name="clear_button">Limpar pena</string>
     <string name="app_logo">App Logo on the toolbar</string>
 
     <string name="fraction_dialog_text">Selecine a alteração da pena</string>
@@ -22,6 +22,8 @@
     <string name="remove_dialog_message">Deseja remover operação?</string>
     <string name="remove_dialog_ok">Sim</string>
     <string name="remove_dialog_cancel">Cancelar</string>
+
+    <string name="toast_add_sentence">Defina a pena inicial</string>
 
     <!--Used to populate the spinner-->
     <string-array name="operations_array">

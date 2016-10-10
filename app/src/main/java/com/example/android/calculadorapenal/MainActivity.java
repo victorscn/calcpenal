@@ -18,19 +18,22 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.shawnlin.numberpicker.NumberPicker;
 
 import java.util.ArrayList;
 
+import static android.view.View.GONE;
+
 public class MainActivity extends AppCompatActivity {
 
     OperationAdapter adapter;
     ArrayList<Operation> operations = new ArrayList<>();
-
+    TextView computeButton;
 
     private static final String DEFAULT_IS_SUM_VALUE = "+";
-    private static Sentence sentence = new Sentence(0,0,0);
+    private static Sentence sentence = new Sentence(0, 0, 0);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +50,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
 
-
         // Initializing sentence textview for the dialog
         final TextView yearSentenceText = (TextView) findViewById(R.id.year_sentence_main);
         final TextView monthSentenceText = (TextView) findViewById(R.id.month_sentence_main);
@@ -60,7 +62,8 @@ public class MainActivity extends AppCompatActivity {
 
         //Footer settings
         View footer = View.inflate(this, R.layout.compute_button, null);
-        TextView computeButton = (TextView) footer.findViewById(R.id.compute_button);
+        computeButton = (TextView) footer.findViewById(R.id.compute_button);
+        computeButton.setVisibility(GONE);
         computeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -74,7 +77,6 @@ public class MainActivity extends AppCompatActivity {
         //Adapter initialization and list setup
         adapter = new OperationAdapter(this, operations);
         sumList.setAdapter(adapter);
-
 
 
         //Setup dialog to show when the sentence is clicked
@@ -102,7 +104,6 @@ public class MainActivity extends AppCompatActivity {
 */
 
 
-
         //Setup dialog for fractions
         sumList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -116,7 +117,7 @@ public class MainActivity extends AppCompatActivity {
                 Button enterNumber = (Button) fractionDialog.findViewById(R.id.fraction_button);
 
                 //Populates Spinner on the fraction dialog
-               final Spinner operationSpinner = (Spinner) fractionDialog.findViewById(R.id.is_sum_spinner);
+                final Spinner operationSpinner = (Spinner) fractionDialog.findViewById(R.id.is_sum_spinner);
                 ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(MainActivity.this,
                         R.array.operations_array, android.R.layout.simple_spinner_item);
                 adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -142,10 +143,9 @@ public class MainActivity extends AppCompatActivity {
                     public void onClick(View view) {
 
 
-
                         changeValues(operationSpinner.getSelectedItem().toString(),
                                 numeratorPicker.getValue(), denominatorPicker.getValue(),
-                                actualPosition, yearSentenceText, monthSentenceText,daySentenceText);
+                                actualPosition, yearSentenceText, monthSentenceText, daySentenceText);
 
 
                         fractionDialog.dismiss();
@@ -162,8 +162,15 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                adapter.add(new Operation(0, 0, DEFAULT_IS_SUM_VALUE));
-                clickAfter(sumList,operations.size());
+                if (sentence != null && sentence.getDaysOfSentence() != 0) {
+                    adapter.add(new Operation(0, 0, DEFAULT_IS_SUM_VALUE));
+                    clickAfter(sumList, operations.size());
+                    if (operations.size()==1)
+                        computeButton.setVisibility(View.VISIBLE);
+                } else {
+                    Toast.makeText(getApplicationContext(),
+                            getResources().getString(R.string.toast_add_sentence), Toast.LENGTH_SHORT).show();
+                }
 
 
             }
@@ -183,28 +190,31 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onPreDraw() {
                 bImageView.getViewTreeObserver().removeOnPreDrawListener(this);
-                Log.v("teste","Width: "+ Integer.toString(bImageView.getMeasuredHeight()));
+                Log.v("teste", "Width: " + Integer.toString(bImageView.getMeasuredHeight()));
                 bImageView.setImageBitmap(
                         decodeSampledBitmapFromResource(getResources(),
-                                R.drawable.justica,bImageView.getMeasuredWidth(),bImageView.getMeasuredHeight()));
+                                R.drawable.justica, bImageView.getMeasuredWidth(),
+                                bImageView.getMeasuredHeight()));
 
                 return true;
             }
         });
 
     }
+
     //Opens the fraction dialog after the list item is added
-    private void clickAfter(ListView sumList, int lastPos){
-        sumList.performItemClick(sumList.getChildAt(lastPos-1),lastPos-1,sumList.getAdapter().getItemId(lastPos-1));
+    private void clickAfter(ListView sumList, int lastPos) {
+        sumList.performItemClick(sumList.getChildAt(lastPos - 1),
+                lastPos - 1, sumList.getAdapter().getItemId(lastPos - 1));
     }
 
-    public void setMainSentence(int year, int month, int day){
-        sentence = new Sentence (year,month,day);
+    public void setMainSentence(int year, int month, int day) {
+        sentence = new Sentence(year, month, day);
     }
 
 
     public void changeValues(String newIsSum, int newNumerator,
-                             int newDenominator, int position,TextView yearSentenceText,
+                             int newDenominator, int position, TextView yearSentenceText,
                              TextView monthSentenceText, TextView daySentenceText) {
 
         Operation operation = operations.get(position);
@@ -216,15 +226,16 @@ public class MainActivity extends AppCompatActivity {
         adapter.notifyDataSetChanged();
 
 
-
     }
 
     /*Method that opens the sentence dialog tho choose a number*/
     public void showSentenceDialog(final TextView yearSentenceText,
-                                   final TextView monthSentenceText, final TextView daySentenceText) {
+                                   final TextView monthSentenceText,
+                                   final TextView daySentenceText) {
+
         final Dialog sentenceDialog = new Dialog(MainActivity.this);
 
-        sentenceDialog.setTitle("Selecione a sentença");
+        sentenceDialog.setTitle("Selecione a pena inicial");
         sentenceDialog.setContentView(R.layout.sentence_dialog);
 
         final NumberPicker yearSentence = (com.shawnlin.numberpicker.NumberPicker)
@@ -247,12 +258,20 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
 
 
-                setMainSentence(yearSentence.getValue(),monthSentence.getValue(),daySentence.getValue());
-
+                setMainSentence(yearSentence.getValue(), monthSentence.getValue(), daySentence.getValue());
 
                 yearSentenceText.setText(String.valueOf(sentence.getYear()));
                 monthSentenceText.setText(String.valueOf(sentence.getMonth()));
                 daySentenceText.setText(String.valueOf(sentence.getDay()));
+
+                if (operations.size() > 0) {
+
+                    for (int i = 0; i < operations.size(); i++) {
+                        Operation currentOperation = operations.get(i);
+                        currentOperation.setBaseSentence(sentence);
+                        adapter.notifyDataSetChanged();
+                    }
+                }
 
                 sentenceDialog.dismiss();
             }
@@ -262,8 +281,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /*Show the result sentence TextView*/
-    public void showResult(TextView resultSentence){
-        if (sentence!=null){
+    public void showResult(TextView resultSentence) {
+        if (sentence != null) {
             resultSentence.setText(finalSentence());
             resultSentence.setVisibility(View.VISIBLE);
         }
@@ -271,18 +290,18 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /*Calculates the result sentence, does not check if sentence is null*/
-    private String finalSentence(){
-        int daysOfSentence=sentence.getDaysOfSentence();
+    private String finalSentence() {
+        int daysOfSentence = sentence.getDaysOfSentence();
         int position;
         Operation currentOperation;
 
-        if (sentence!=null)
-        for (position=0;position!=operations.size();position++){
-            currentOperation=operations.get(position);
-            if(currentOperation.getIsSum().equals("+"))
-            daysOfSentence+=currentOperation.getDaysOfSentence();
-            else daysOfSentence-=currentOperation.getDaysOfSentence();
-        }
+        if (sentence != null)
+            for (position = 0; position != operations.size(); position++) {
+                currentOperation = operations.get(position);
+                if (currentOperation.getIsSum().equals("+"))
+                    daysOfSentence += currentOperation.getDaysOfSentence();
+                else daysOfSentence -= currentOperation.getDaysOfSentence();
+            }
 
         Sentence finalSentence = new Sentence(daysOfSentence);
 
@@ -291,19 +310,21 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void clear(View v){
+    public void clear(View v) {
         operations.clear();
         TextView result = (TextView) findViewById(R.id.result);
         TextView yearSentenceText = (TextView) findViewById(R.id.year_sentence_main);
         TextView monthSentenceText = (TextView) findViewById(R.id.month_sentence_main);
         TextView daySentenceText = (TextView) findViewById(R.id.day_sentence_main);
-        result.setVisibility(View.GONE);
-        sentence = new Sentence(0,0,0);
+        result.setVisibility(GONE);
+        sentence = new Sentence(0, 0, 0);
 
         yearSentenceText.setText("0");
         monthSentenceText.setText("0");
         daySentenceText.setText("0");
         adapter.notifyDataSetChanged();
+        computeButton.setVisibility(GONE);
+
 
     }
 
