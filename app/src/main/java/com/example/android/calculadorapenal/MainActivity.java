@@ -6,8 +6,9 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.AdapterView;
@@ -20,6 +21,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.ads.doubleclick.PublisherAdRequest;
+import com.google.android.gms.ads.doubleclick.PublisherAdView;
 import com.shawnlin.numberpicker.NumberPicker;
 
 import java.util.ArrayList;
@@ -102,7 +105,10 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 */
-
+        //Ads setup
+        PublisherAdView mPublisherAdView = (PublisherAdView) findViewById(R.id.publisherAdView);
+        PublisherAdRequest adRequest = new PublisherAdRequest.Builder().build();
+        mPublisherAdView.loadAd(adRequest);
 
         //Setup dialog for fractions
         sumList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -137,7 +143,7 @@ public class MainActivity extends AppCompatActivity {
 
                 /*Opens the fraction dialog tho choose a number and send send chosen values to
                 TextViews on the item clicked */
-                // TODO return the value on the picker to the array
+
                 enterNumber.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -165,7 +171,7 @@ public class MainActivity extends AppCompatActivity {
                 if (sentence != null && sentence.getDaysOfSentence() != 0) {
                     adapter.add(new Operation(0, 0, DEFAULT_IS_SUM_VALUE));
                     clickAfter(sumList, operations.size());
-                    if (operations.size()==1)
+                    if (operations.size() == 1)
                         computeButton.setVisibility(View.VISIBLE);
                 } else {
                     Toast.makeText(getApplicationContext(),
@@ -190,7 +196,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onPreDraw() {
                 bImageView.getViewTreeObserver().removeOnPreDrawListener(this);
-                Log.v("teste", "Width: " + Integer.toString(bImageView.getMeasuredHeight()));
                 bImageView.setImageBitmap(
                         decodeSampledBitmapFromResource(getResources(),
                                 R.drawable.justica, bImageView.getMeasuredWidth(),
@@ -367,6 +372,13 @@ public class MainActivity extends AppCompatActivity {
         // Decode bitmap with inSampleSize set
         options.inJustDecodeBounds = false;
         return BitmapFactory.decodeResource(res, resId, options);
+    }
+
+    public void showPopup(View v){
+        PopupMenu popup = new PopupMenu(this,v);
+        MenuInflater inflater = popup.getMenuInflater();
+        inflater.inflate(R.menu.actions, popup.getMenu());
+        popup.show();
     }
 
 }

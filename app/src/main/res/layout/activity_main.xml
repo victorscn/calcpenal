@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:ads="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:animateLayoutChanges="true"
     android:fillViewport="true"
     android:orientation="vertical"
 
@@ -14,132 +16,157 @@
         android:layout_height="200dp">
 
         <ImageView
+            android:id="@+id/bg_image"
             android:layout_width="match_parent"
             android:layout_height="260dp"
             android:adjustViewBounds="true"
-            android:id="@+id/bg_image"
-            android:scaleType="centerCrop"/>
+            android:scaleType="centerCrop" />
+
         <View
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@android:color/black"
-            android:alpha="0.25"/>
+            android:alpha="0.25"
+            android:background="@android:color/black" />
 
 
         <LinearLayout
-            android:layout_marginTop="20dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
             android:orientation="vertical">
 
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:elevation="4dp"
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
+                style="@style/TransparentActionBar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
 
-            style="@style/TransparentActionBar">
+                android:elevation="4dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginRight="32dp"
+                        android:contentDescription="@string/app_logo"
+                        android:src="@drawable/legal_hammer" />
+
+                    <TextView
+                        style="@style/ToolbarText"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:text="@string/app_name"
+                        android:textColor="@color/white" />
+
+                    <ImageButton
+                        android:id="@+id/toolbar_clear"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:background="@null"
+                        android:contentDescription="@string/clear_button"
+                        android:onClick="clear"
+                        android:padding="12dp"
+                        android:src="@drawable/ic_autorenew_white_24px" />
+
+                    <ImageButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginRight="4dp"
+                        android:background="@null"
+                        android:padding="12dp"
+                        android:onClick="showPopup"
+                        android:src="@drawable/ic_menu_white_24px" />
+                </LinearLayout>
+
+            </android.support.v7.widget.Toolbar>
+
 
             <LinearLayout
+                android:id="@+id/sentence_main"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
+                android:baselineAligned="false"
                 android:orientation="horizontal">
 
-                <ImageView
-                    android:layout_width="24dp"
-                    android:layout_marginRight="32dp"
-                    android:layout_height="match_parent"
-                    android:src="@drawable/legal_hammer"
-                    android:contentDescription="@string/app_logo" />
-
-                <TextView
-                    style="@style/ToolbarText"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="center_vertical"
-                    tools:text="@string/app_name"
-                    android:textColor="@color/white"
-                    android:textStyle="bold"
-                    />
-
-                <ImageButton
-                    android:id="@+id/toolbar_clear"
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginRight="4dp"
-                    android:background="@null"
-                    android:contentDescription="@string/clear_button"
-                    android:onClick="clear"
-                    android:padding="12dp"
-                    android:src="@drawable/ic_autorenew_white_24px" />
-            </LinearLayout>
+                    android:layout_weight="1"
+                    android:orientation="vertical">
 
-        </android.support.v7.widget.Toolbar>
+                    <TextView
+                        style="@style/sentence_title"
+                        android:text="@string/year_main" />
+
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@color/colorPrimary">
+
+                        <TextView
+                            android:id="@+id/year_sentence_main"
+                            style="@style/sentence_number"
+                            android:text="0" />
+                    </FrameLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="@style/sentence_title"
+                        android:text="@string/month_main" />
+
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@color/colorPrimary">
+
+                        <TextView
+                            android:id="@+id/month_sentence_main"
+                            style="@style/sentence_number"
+                            android:text="0" />
+                    </FrameLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="@style/sentence_title"
+                        android:text="@string/day_main" />
+
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@color/colorPrimary">
+
+                        <TextView
+                            android:id="@+id/day_sentence_main"
+                            style="@style/sentence_number"
+                            android:text="0" />
+                    </FrameLayout>
 
 
-        <LinearLayout
-            android:id="@+id/sentence_main"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:baselineAligned="false"
-            android:orientation="horizontal">
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical">
-
-                <TextView
-                    style="@style/sentence_title"
-                    android:text="@string/year_main" />
-
-                <TextView
-                    android:id="@+id/year_sentence_main"
-                    style="@style/sentence_number"
-                    android:text="0"
-                    />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical">
-
-                <TextView
-                    style="@style/sentence_title"
-                    android:text="@string/month_main" />
-
-                <TextView
-                    android:id="@+id/month_sentence_main"
-                    style="@style/sentence_number"
-                    android:text="0" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical">
-
-                <TextView
-                    style="@style/sentence_title"
-                    android:text="@string/day_main" />
-
-                <TextView
-                    android:id="@+id/day_sentence_main"
-                    style="@style/sentence_number"
-                    android:text="0" />
+                </LinearLayout>
 
 
             </LinearLayout>
 
-
-        </LinearLayout>
             <Button
                 android:id="@+id/addBtn"
                 android:layout_width="fill_parent"
@@ -148,27 +175,54 @@
                 android:text="@string/main_button_add"
                 android:textColor="@color/colorPrimaryLight"
                 android:textStyle="bold" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="4dp"
+                android:background="@color/colorPrimary"/>
         </LinearLayout>
     </FrameLayout>
 
-        <!--Primeira versão para teste com botão acima, texto hardcoded-->
+    <!--Primeira versão para teste com botão acima, texto hardcoded-->
 
 
-        <ListView
-            android:id="@+id/list"
+    <ListView
+        android:id="@+id/list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:drawSelectorOnTop="true" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <View
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:drawSelectorOnTop="true" />
+            android:layout_height="4dp"
+            android:background="@color/colorPrimary" />
 
         <TextView
             android:id="@+id/result"
+            android:textColor="@android:color/white"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
             android:gravity="center_horizontal"
+            android:paddingBottom="8dp"
             android:textSize="18sp"
             android:visibility="gone"
-            tools:text="teste" />
-
+            android:background="@color/colorPrimary"
+            tools:text="test" />
     </LinearLayout>
+
+    <com.google.android.gms.ads.doubleclick.PublisherAdView
+        android:id="@+id/publisherAdView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:background="@android:color/black"
+        ads:adSize="SMART_BANNER"
+        ads:adUnitId="@string/banner_ad_unit_id" />
+
+
+</LinearLayout>
