@@ -14,6 +14,7 @@ import android.view.ViewTreeObserver;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -36,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
     TextView computeButton;
 
     private static final String DEFAULT_IS_SUM_VALUE = "+";
-    private static Sentence sentence = new Sentence(0, 0, 0);
+    private static Sentence sentence = new Sentence(0, 0, 0, 0);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +58,7 @@ public class MainActivity extends AppCompatActivity {
         final TextView yearSentenceText = (TextView) findViewById(R.id.year_sentence_main);
         final TextView monthSentenceText = (TextView) findViewById(R.id.month_sentence_main);
         final TextView daySentenceText = (TextView) findViewById(R.id.day_sentence_main);
+        final TextView daysFSentenceText = (TextView) findViewById(R.id.days_fine_sentence_main);
 
         //Initializing result textbox
         final TextView resultSentence = (TextView) findViewById(R.id.result);
@@ -87,7 +89,8 @@ public class MainActivity extends AppCompatActivity {
         sentenceLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showSentenceDialog(yearSentenceText, monthSentenceText, daySentenceText);
+                showSentenceDialog(yearSentenceText, monthSentenceText, daySentenceText,
+                        daysFSentenceText);
             }
         });
 
@@ -213,8 +216,8 @@ public class MainActivity extends AppCompatActivity {
                 lastPos - 1, sumList.getAdapter().getItemId(lastPos - 1));
     }
 
-    public void setMainSentence(int year, int month, int day) {
-        sentence = new Sentence(year, month, day);
+    public void setMainSentence(int year, int month, int day, int daysFine) {
+        sentence = new Sentence(year, month, day, daysFine);
     }
 
 
@@ -236,7 +239,8 @@ public class MainActivity extends AppCompatActivity {
     /*Method that opens the sentence dialog tho choose a number*/
     public void showSentenceDialog(final TextView yearSentenceText,
                                    final TextView monthSentenceText,
-                                   final TextView daySentenceText) {
+                                   final TextView daySentenceText,
+                                   final TextView daysFineSentenceText) {
 
         final Dialog sentenceDialog = new Dialog(MainActivity.this);
 
@@ -249,6 +253,7 @@ public class MainActivity extends AppCompatActivity {
                 sentenceDialog.findViewById(R.id.month_sentence);
         final NumberPicker daySentence = (com.shawnlin.numberpicker.NumberPicker)
                 sentenceDialog.findViewById(R.id.day_sentence);
+        final EditText daysFine = (EditText) sentenceDialog.findViewById(R.id.days_fine_sentence);
 
         yearSentence.setValue(sentence.getYear());
         monthSentence.setValue(sentence.getMonth());
@@ -263,11 +268,13 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
 
 
-                setMainSentence(yearSentence.getValue(), monthSentence.getValue(), daySentence.getValue());
+                setMainSentence(yearSentence.getValue(), monthSentence.getValue(),
+                        daySentence.getValue(), Integer.parseInt(daysFine.getText().toString()));
 
                 yearSentenceText.setText(String.valueOf(sentence.getYear()));
                 monthSentenceText.setText(String.valueOf(sentence.getMonth()));
                 daySentenceText.setText(String.valueOf(sentence.getDay()));
+                daysFineSentenceText.setText(String.valueOf(sentence.getdaysFine()));
 
                 if (operations.size() > 0) {
 
@@ -297,19 +304,24 @@ public class MainActivity extends AppCompatActivity {
     /*Calculates the result sentence, does not check if sentence is null*/
     private String finalSentence() {
         int daysOfSentence = sentence.getDaysOfSentence();
+        int daysFine = sentence.getdaysFine();
         int position;
+        double fraction = 0.0;
         Operation currentOperation;
 
         if (sentence != null)
             for (position = 0; position != operations.size(); position++) {
                 currentOperation = operations.get(position);
                 if (currentOperation.getIsSum().equals("+"))
-                    daysOfSentence += currentOperation.getDaysOfSentence();
-                else daysOfSentence -= currentOperation.getDaysOfSentence();
+                    fraction += ((double) currentOperation.getNumerator() / currentOperation.getDenominator());
+                else
+                    fraction -= ((double) currentOperation.getNumerator() / currentOperation.getDenominator());
             }
-
+        daysOfSentence = (int) (fraction * daysOfSentence) + daysOfSentence;
+        //Result sentence
         Sentence finalSentence = new Sentence(daysOfSentence);
-
+        daysFine = (int) (fraction * daysFine) + daysFine;
+        finalSentence.setDaysFine(daysFine);
 
         return finalSentence.writeSentence();
 
@@ -321,12 +333,14 @@ public class MainActivity extends AppCompatActivity {
         TextView yearSentenceText = (TextView) findViewById(R.id.year_sentence_main);
         TextView monthSentenceText = (TextView) findViewById(R.id.month_sentence_main);
         TextView daySentenceText = (TextView) findViewById(R.id.day_sentence_main);
+        TextView daysFineText = (TextView) findViewById(R.id.days_fine_sentence_main);
         result.setVisibility(GONE);
-        sentence = new Sentence(0, 0, 0);
+        sentence = new Sentence(0, 0, 0, 0);
 
         yearSentenceText.setText("0");
         monthSentenceText.setText("0");
         daySentenceText.setText("0");
+        daysFineText.setText("0");
         adapter.notifyDataSetChanged();
         computeButton.setVisibility(GONE);
 
@@ -374,11 +388,12 @@ public class MainActivity extends AppCompatActivity {
         return BitmapFactory.decodeResource(res, resId, options);
     }
 
-    public void showPopup(View v){
-        PopupMenu popup = new PopupMenu(this,v);
+    public void showPopup(View v) {
+        PopupMenu popup = new PopupMenu(this, v);
         MenuInflater inflater = popup.getMenuInflater();
         inflater.inflate(R.menu.actions, popup.getMenu());
         popup.show();
     }
+
 
 }

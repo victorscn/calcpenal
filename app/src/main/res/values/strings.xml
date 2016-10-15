@@ -4,6 +4,7 @@
     <string name="year_main">Anos</string>
     <string name="month_main">Meses</string>
     <string name="day_main">Dias</string>
+    <string name="days_fine_main">Dias Multa</string>
     <string name="main_button_add">Adicionar</string>
     <string name="clear_button">Limpar pena</string>
     <string name="app_logo">App Logo on the toolbar</string>
@@ -18,7 +19,7 @@
     <string name="year_text">Ano</string>
     <string name="month_text">Mês</string>
     <string name="day_text">Dia</string>
-    <string name="sentence_button_text">Prosseguir</string>
+    <string name="sentence_button_text">Adicionar</string>
 
     <string name="remove_dialog_message">Deseja remover operação?</string>
     <string name="remove_dialog_ok">Sim</string>
@@ -27,6 +28,8 @@
     <string name="menu_about">Sobre</string>
     <string name="menu_rate">Nos Avalie</string>
     <string name="menu_donation">Doação / No Ads</string>
+
+    <string name="days_fine_hint">0</string>
 
     <string name="toast_add_sentence">Defina a pena inicial</string>
 

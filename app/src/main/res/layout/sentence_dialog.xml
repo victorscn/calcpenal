@@ -2,21 +2,9 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="wrap_content"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:layout_margin="16dp"
     android:orientation="vertical">
-
-<!--
-    <TextView
-        android:id="@+id/sentence_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        android:text="@string/sentence_dialog_title" />
--->
-
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -26,7 +14,7 @@
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="36dp"
+            android:layout_marginRight="24dp"
             android:layout_marginTop="10dp">
 
             <TextView
@@ -48,13 +36,13 @@
                 app:np_orientation="vertical"
                 app:np_textColor="@color/colorPrimary"
                 app:np_textSize="16sp"
-                app:np_width="64dp" />
+                app:np_width="54dp" />
         </RelativeLayout>
 
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="36dp"
+            android:layout_marginRight="24dp"
             android:layout_marginTop="10dp">
 
             <TextView
@@ -76,12 +64,13 @@
                 app:np_orientation="vertical"
                 app:np_textColor="@color/colorPrimary"
                 app:np_textSize="16sp"
-                app:np_width="64dp" />
+                app:np_width="54dp" />
         </RelativeLayout>
 
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginRight="24dp"
             android:layout_marginTop="10dp">
 
             <TextView
@@ -104,20 +93,60 @@
                 app:np_orientation="vertical"
                 app:np_textColor="@color/colorPrimary"
                 app:np_textSize="16sp"
-                app:np_width="64dp" />
+                app:np_width="54dp" />
         </RelativeLayout>
 
 
     </LinearLayout>
 
-    <Button
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="52dp"
-        android:layout_marginTop="16dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:orientation="vertical">
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginBottom="4dp"
+            android:background="@color/colorPrimary"/>
+        <TextView
+            android:id="@+id/title_days_fine"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/days_fine_main" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="4dp"
+            android:background="@color/colorPrimary"/>
+
+        <EditText
+            android:padding="12dp"
+            android:id="@+id/days_fine_sentence"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:hint="@string/days_fine_hint"
+            android:inputType="number"
+            android:textColor="@color/colorPrimary"
+            android:textSize="16sp"
+            android:maxLength="3"/>
+
+
+    </LinearLayout>
+
+    <Button
         android:id="@+id/sentence_button"
+        android:layout_gravity="end"
+        android:padding="12dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:background="@null"
         android:text="@string/sentence_button_text"
-        android:background="@color/greenSpot"
-        android:textColor="@color/white"
-        android:textStyle="bold"
-        />
+        android:textColor="@color/button_blue"
+        android:textStyle="bold" />
 </LinearLayout>

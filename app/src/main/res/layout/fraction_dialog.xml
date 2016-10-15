@@ -62,7 +62,7 @@
                 android:layout_marginLeft="10dp"
                 app:np_dividerColor="@color/colorPrimary"
                 app:np_height="64dp"
-                app:np_max="9"
+                app:np_max="20"
                 app:np_min="1"
                 app:np_orientation="horizontal"
                 app:np_textColor="@color/colorPrimary"
