@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="300dp"
-    android:layout_height="300dp">
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
 
     <TextView
         android:id="@+id/fraction_title"
@@ -10,6 +11,7 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_margin="16dp"
+        android:textSize="18sp"
         android:text="@string/fraction_dialog_text" />
 
     <!--TODO funtion to pass the values to text on activity_main-->
@@ -30,7 +32,8 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:layout_margin="16dp">
 
             <!--TODO Change to style to clean the code-->
 
@@ -72,12 +75,28 @@
         </LinearLayout>
     </LinearLayout>
 
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/description_edit"
+        android:textSize="16sp"
+        android:maxLength="30"
+        android:layout_gravity="center_horizontal"
+        android:maxLines="1"
+        android:hint="Descrição"
+        android:inputType="text"
+        android:imeOptions="actionDone"/>
+
     <Button
         android:id="@+id/fraction_button"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="@null"
+        android:layout_marginTop="12dp"
+        android:layout_marginRight="12dp"
+        android:padding="12dp"
+        android:textColor="@color/colorPrimary"
         android:layout_below="@id/fraction_layout"
-        android:layout_centerHorizontal="true"
-        android:layout_margin="16dp"
+        android:layout_gravity="right"
         android:text="@string/fraction_button" />
-</RelativeLayout>
+</LinearLayout>

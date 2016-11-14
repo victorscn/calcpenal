@@ -61,6 +61,9 @@ public class OperationAdapter extends ArrayAdapter<Operation> {
         TextView isSumText = (TextView) listItemView.findViewById(R.id.isSum);
         isSumText.setText(currentOperation.getIsSum());
 
+        /*Find the TextView description and populates*/
+        TextView descriptionText = (TextView) listItemView.findViewById(R.id.description);
+        descriptionText.setText(currentOperation.getDescription());
 
 
         return listItemView;

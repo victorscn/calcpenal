@@ -1,6 +1,8 @@
 package com.example.android.calculadorapenal;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -94,20 +96,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-//TODO make the remove dialog
-/*
-        sumList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long id) {
-                final int actualPosition = position;
-                final Dialog removeDialog = new Dialog(MainActivity.this);
-                removeDialog.setContentView(R.layout.remove_dialog);
-
-
-                return false;
-            }
-        });
-*/
         //Ads setup
         PublisherAdView mPublisherAdView = (PublisherAdView) findViewById(R.id.publisherAdView);
         PublisherAdRequest adRequest = new PublisherAdRequest.Builder().build();
@@ -136,12 +124,18 @@ public class MainActivity extends AppCompatActivity {
                         (com.shawnlin.numberpicker.NumberPicker) fractionDialog.findViewById(R.id.numerator_picker);
                 final NumberPicker denominatorPicker =
                         (com.shawnlin.numberpicker.NumberPicker) fractionDialog.findViewById(R.id.denominator_picker);
+                final EditText fractionDescription = (EditText) fractionDialog.findViewById(R.id.description_edit);
 
 
+//              Set values on the dialog from the arrayList
                 numeratorPicker.setValue(operations.get(actualPosition).getNumerator());
                 denominatorPicker.setValue(operations.get(actualPosition).getDenominator());
                 operationSpinner.setSelection(adapter.getPosition(operations.get(actualPosition).getIsSum()));
 
+                //Checks if description is null
+                if (operations.get(actualPosition).getDescription()!=null){
+                    fractionDescription.setText(operations.get(actualPosition).getDescription());
+                }
 
 
                 /*Opens the fraction dialog tho choose a number and send send chosen values to
@@ -154,7 +148,8 @@ public class MainActivity extends AppCompatActivity {
 
                         changeValues(operationSpinner.getSelectedItem().toString(),
                                 numeratorPicker.getValue(), denominatorPicker.getValue(),
-                                actualPosition, yearSentenceText, monthSentenceText, daySentenceText);
+                                fractionDescription.getText().toString(),actualPosition, yearSentenceText,
+                                monthSentenceText, daySentenceText);
 
 
                         fractionDialog.dismiss();
@@ -165,7 +160,38 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        //Setting up add button
+        /*Setup on hold actions sumList item. Opens a dialog and asks the user if he wants to delete
+        the operation*/
+        sumList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener(){
+            @Override
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long id) {
+                final int actualPosition = position;
+                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                builder.setMessage(R.string.delete_dialog_message)
+                        .setPositiveButton(R.string.delete, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+
+                                operations.remove(actualPosition);
+                                adapter.notifyDataSetChanged();
+                            }
+                        })
+                        .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                dialogInterface.cancel();
+                            }
+                        });
+              builder.create().show();
+
+
+
+
+                return true;
+            }
+        });
+
+        //Setting up add button, adiciona operação no Array List
         Button addBtn = (Button) findViewById(R.id.addBtn);
         addBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -222,7 +248,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void changeValues(String newIsSum, int newNumerator,
-                             int newDenominator, int position, TextView yearSentenceText,
+                             int newDenominator, String newDescription, int position, TextView yearSentenceText,
                              TextView monthSentenceText, TextView daySentenceText) {
 
         Operation operation = operations.get(position);
@@ -230,6 +256,7 @@ public class MainActivity extends AppCompatActivity {
         operation.setDenominator(newDenominator);
         operation.setIsSum(newIsSum);
         operation.setBaseSentence(sentence);
+        operation.setDescription(newDescription);
 
         adapter.notifyDataSetChanged();
 
@@ -267,13 +294,18 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
+                String daysFineCheck = daysFine.getText().toString();
+                if (daysFineCheck.isEmpty())
+                    daysFineCheck = "0";
 
                 setMainSentence(yearSentence.getValue(), monthSentence.getValue(),
-                        daySentence.getValue(), Integer.parseInt(daysFine.getText().toString()));
+                        daySentence.getValue(), Integer.parseInt(daysFineCheck));
 
                 yearSentenceText.setText(String.valueOf(sentence.getYear()));
                 monthSentenceText.setText(String.valueOf(sentence.getMonth()));
                 daySentenceText.setText(String.valueOf(sentence.getDay()));
+
+
                 daysFineSentenceText.setText(String.valueOf(sentence.getdaysFine()));
 
                 if (operations.size() > 0) {

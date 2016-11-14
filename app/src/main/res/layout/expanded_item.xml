@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -10,17 +12,17 @@
         android:layout_width="24dp"
         android:layout_height="match_parent"
         android:layout_margin="16dp"
-        android:textSize="18sp"
-        android:gravity="center"
         android:layout_weight="0"
+        android:gravity="center"
+        android:textSize="18sp"
         tools:text="+" />
 
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_weight="1">
+        android:layout_weight="1"
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/numerator"
@@ -44,14 +46,33 @@
             tools:text="6" />
     </LinearLayout>
 
-
-    <TextView
+    <LinearLayout
+        android:layout_marginTop="8dp"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
-        android:id="@+id/sentence"
-        android:textSize="16sp"
-        android:gravity="center_vertical"
-        tools:text="4 meses e 20 dias" />
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/sentence"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_weight="1"
+            android:layout_gravity="end"
+            tools:text="4 meses e 20 dias"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_weight="1"
+            android:textSize="16sp"
+            android:layout_gravity="end"
+            tools:text="teste" />
+
+    </LinearLayout>
 </LinearLayout>

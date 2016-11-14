@@ -9,6 +9,10 @@
     <string name="clear_button">Limpar pena</string>
     <string name="app_logo">App Logo on the toolbar</string>
 
+    <string name="delete_dialog_message">Deletar operação?</string>
+    <string name="delete">Deletar</string>
+    <string name="cancel">Cancelar</string>
+
     <string name="fraction_dialog_text">Selecine a alteração da pena</string>
     <string name="fraction_button">Adicionar</string>
     <string name="list_button_ok">Calcular</string>
@@ -30,6 +34,7 @@
     <string name="menu_donation">Doação / No Ads</string>
 
     <string name="days_fine_hint">0</string>
+    <string name="operation_hint">Descrição</string>
 
     <string name="toast_add_sentence">Defina a pena inicial</string>
 

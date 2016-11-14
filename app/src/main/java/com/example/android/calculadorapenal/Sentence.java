@@ -160,7 +160,7 @@ public class Sentence {
             else if (getDaysOfSentence() < 365) {
                 if (getDaysOfSentence() % 30 == 0)
                     return writeMonth() + " e " + writeDaysFine();
-                else return writeMonth() + " e " + writeDay();
+                else return writeMonth() + ", " + writeDay() + " e " + writeDaysFine();
             } else if (getDaysOfSentence() % 365 == 0)
                 return writeYear() + " e " + writeDaysFine();
             else if (getMonth() == 0 && getDay() != 0)
