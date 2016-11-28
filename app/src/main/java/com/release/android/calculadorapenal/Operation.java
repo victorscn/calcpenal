@@ -1,4 +1,4 @@
-package com.example.android.calculadorapenal;
+package com.release.android.calculadorapenal;
 
 /**
  * Created by victor on 22/09/2016.

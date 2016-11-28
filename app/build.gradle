@@ -1,20 +1,37 @@
 apply plugin: 'com.android.application'
 
 android {
+    signingConfigs {
+        /* TODO(developer): Configure to sign app with a release key for testing.
+        release {
+            storeFile file('path/to/release/signing/key')
+            keyAlias 'release_key_alias'
+            keyPassword "${password}"
+            storePassword "${password}"
+        }*/
+    }
     compileSdkVersion 24
     buildToolsVersion "23.0.3"
     defaultConfig {
-        applicationId "com.example.android.calculadorapenal"
+        applicationId "com.release.android.calculadorapenal"
         minSdkVersion 16
         targetSdkVersion 24
         versionCode 1
-        versionName "1.0"
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
+
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    productFlavors{
+        free{
+            versionName "1.0-free"
+        }
+        full{
+            applicationId="com.release.android.calculadorapenal.full"
+            versionName "1.0-full"
         }
     }
 }
@@ -35,4 +52,5 @@ dependencies {
     compile 'com.android.support:support-v4:24.+'
     testCompile 'junit:junit:4.12'
     compile 'org.jetbrains:annotations-java5:15.0'
+    compile 'com.google.android.gms:play-services-appindexing:9.6.1'
 }

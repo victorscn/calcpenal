@@ -29,7 +29,9 @@
     <string name="remove_dialog_ok">Sim</string>
     <string name="remove_dialog_cancel">Cancelar</string>
 
-    <string name="menu_about">Sobre Nós</string>>
+    <string name="menu_about">Sobre Nós</string>
+
+    <string name="waiting">Carregando...</string>
 
     <string name="days_fine_hint">0</string>
     <string name="operation_hint">Descrição</string>

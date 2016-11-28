@@ -1,4 +1,4 @@
-package com.example.android.calculadorapenal;
+package com.release.android.calculadorapenal;
 
 import org.jetbrains.annotations.Contract;
 

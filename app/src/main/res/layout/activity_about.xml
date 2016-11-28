@@ -4,7 +4,7 @@
     android:id="@+id/activity_about"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.android.calculadorapenal.About"
+    tools:context="com.release.android.calculadorapenal.About"
     android:orientation="vertical">
     <View
         android:layout_width="match_parent"

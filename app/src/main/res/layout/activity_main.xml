@@ -1,7 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:ads="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+   android:layout_height="match_parent"
+    android:layout_width="match_parent">
+
+<LinearLayout
+    android:layout_gravity="center"
+    android:id="@+id/screen_waiting"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:visibility="gone">
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_hourglass_empty_24px"/>
+    <TextView
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:text="@string/waiting"/>
+
+</LinearLayout>
+<LinearLayout
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -9,7 +30,7 @@
     android:fillViewport="true"
     android:orientation="vertical"
 
-    tools:context="com.example.android.calculadorapenal.MainActivity">
+    tools:context="com.release.android.calculadorapenal.MainActivity">
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -85,7 +106,7 @@
                         android:layout_marginRight="4dp"
                         android:background="@null"
                         android:padding="12dp"
-                        android:onClick="showBuy"
+                        android:onClick="onNoAdsButtonClicked"
                         android:src="@drawable/ic_monetization_on_24px" />
                 </LinearLayout>
 
@@ -255,3 +276,4 @@
 
 
 </LinearLayout>
+</FrameLayout>
