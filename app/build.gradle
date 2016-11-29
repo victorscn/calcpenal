@@ -16,8 +16,8 @@ android {
         applicationId "com.release.android.calculadorapenal"
         minSdkVersion 16
         targetSdkVersion 24
-        versionName "1.0-free"
-        versionCode 1
+        versionName "1.0.2"
+        versionCode 102
     }
 
     buildTypes {

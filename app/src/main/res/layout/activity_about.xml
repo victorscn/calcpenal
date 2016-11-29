@@ -73,5 +73,11 @@
         android:layout_margin="16dp"
         android:text="@string/about_us_text"
         android:gravity="fill_horizontal"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:text="@string/version_name"
+        android:gravity="fill_horizontal"/>
 
 </LinearLayout>
