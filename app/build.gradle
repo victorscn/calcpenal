@@ -16,6 +16,7 @@ android {
         applicationId "com.release.android.calculadorapenal"
         minSdkVersion 16
         targetSdkVersion 24
+        versionName "1.0-free"
         versionCode 1
     }
 
@@ -25,15 +26,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-    productFlavors{
-        free{
-            versionName "1.0-free"
-        }
-        full{
-            applicationId="com.release.android.calculadorapenal.full"
-            versionName "1.0-full"
-        }
-    }
+
 }
 
 dependencies {
@@ -47,10 +40,12 @@ dependencies {
     })
     compile 'com.android.support:appcompat-v7:24.2.1'
     compile 'com.android.support:palette-v7:24.2.1'
-    compile 'com.google.android.gms:play-services-ads:9.6.1'
+    compile 'com.google.firebase:firebase-ads:9.6.1'
+    compile 'com.google.firebase:firebase-core:9.6.1'
     compile 'com.android.support:recyclerview-v7:24.2.1'
     compile 'com.android.support:support-v4:24.+'
     testCompile 'junit:junit:4.12'
     compile 'org.jetbrains:annotations-java5:15.0'
     compile 'com.google.android.gms:play-services-appindexing:9.6.1'
 }
+apply plugin: 'com.google.gms.google-services'

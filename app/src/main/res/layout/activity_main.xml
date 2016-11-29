@@ -100,6 +100,7 @@
                         android:src="@drawable/ic_autorenew_white_24px" />
 
                     <ImageButton
+                        android:id="@+id/purchase_button"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
@@ -265,9 +266,9 @@
             tools:text="test" />
     </LinearLayout>
 
-    <com.google.android.gms.ads.doubleclick.PublisherAdView
+    <com.google.android.gms.ads.AdView
         android:id="@+id/publisherAdView"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:background="@android:color/black"

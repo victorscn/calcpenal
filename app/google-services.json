@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "1099224897512",
+    "firebase_url": "https://calculadora-penal-2ddd4.firebaseio.com",
+    "project_id": "calculadora-penal-2ddd4",
+    "storage_bucket": "calculadora-penal-2ddd4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1099224897512:android:4630398857b2259c",
+        "android_client_info": {
+          "package_name": "com.release.android.calculadorapenal"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1099224897512-74gun396neo3bmbo2i0hnsotnvsu17k3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBNXuAeEvJK8KfhcH3dkQMfdbLxfR5Fams"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

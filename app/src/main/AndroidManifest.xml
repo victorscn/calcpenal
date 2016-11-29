@@ -3,6 +3,7 @@
     package="com.release.android.calculadorapenal">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <uses-permission android:name="com.android.vending.BILLING"/>
 
     <application
@@ -11,6 +12,9 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        
+        
+        
         <activity android:name="com.release.android.calculadorapenal.MainActivity"
             android:screenOrientation="portrait">
             <intent-filter>
@@ -21,11 +25,18 @@
         </activity>
         <activity android:name="com.release.android.calculadorapenal.About"
             android:parentActivityName="com.release.android.calculadorapenal.MainActivity"
-            android:screenOrientation="portrait"/><!-- ATTENTION: This was auto-generated to add Google Play services to your project for
+            android:screenOrientation="portrait"/>
+        
+        <!-- ATTENTION: This was auto-generated to add Google Play services to your project for
      App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information. -->
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
+
+        <activity android:name="com.google.android.gms.ads.AdActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"
+            android:theme="@android:style/Theme.Translucent" />
+
     </application>
 
 </manifest>
