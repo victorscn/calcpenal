@@ -10,7 +10,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -27,8 +26,10 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.InterstitialAd;
 import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
@@ -46,10 +47,9 @@ import java.util.ArrayList;
 
 import static android.util.Log.e;
 import static android.view.View.GONE;
+import static com.release.android.calculadorapenal.R.id.result;
 
 public class MainActivity extends AppCompatActivity implements IabBroadcastReceiver.IabBroadcastListener {
-
-    private String android_id = Settings.Secure.ANDROID_ID;
 
     static final String TAG = "CALCULADORA PENAL";
     // Does the user have the full version?
@@ -57,6 +57,7 @@ public class MainActivity extends AppCompatActivity implements IabBroadcastRecei
 
     //Adview setup
     private AdView mPublisherAdView;
+    private InterstitialAd mInterstitialAd;
 
     //SKUs for the no ads version
     //TODO: alterar para noads
@@ -93,7 +94,7 @@ public class MainActivity extends AppCompatActivity implements IabBroadcastRecei
         //TODO will it need a loadData()?
 
         //Initialize the Mobile Ads SDK
-        MobileAds.initialize(this,"ca-app-pub-1231118493223046~4446000418");
+        MobileAds.initialize(this, "ca-app-pub-1231118493223046~4446000418");
 
         //app-specific public key
         String base64EncodedPublicKey = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAyyQXyuhUy7IOCrZx2I++hsQxdqQzTJhvSSe1T2ZWrDhFRlCF0pEMMsljpUNVg3xTuVQcy4P64DQqyqxkxq/LayOJkmfvpe9eHBOVtpaMrCYTSlgoJZTqhEDBDQVtBTuzurUR3iQZklDQ4uJmUPFXwOtU7xuG/dv8i4GGr1bk+tuZmFZMjqZsm7yYnD/rAKlmZH09iHJ0k448w5M20qPLmWAUNI9lON4Ed+HXwU2mi+GJPQGuKVdPl3gwmrRoCkaNuaMIfbgh/ON6avGGYv3abHiUuNYsKiXQoaVJ5pQAu7XJ1JT+G2GO6D/PQ+iZF243W2j+0ujr8ROODLi8gmEIPQIDAQAB";
@@ -159,7 +160,7 @@ public class MainActivity extends AppCompatActivity implements IabBroadcastRecei
         final TextView daysFSentenceText = (TextView) findViewById(R.id.days_fine_sentence_main);
 
         //Initializing result textbox
-        final TextView resultSentence = (TextView) findViewById(R.id.result);
+        final TextView resultSentence = (TextView) findViewById(result);
 
         final ListView sumList = (ListView) findViewById(R.id.list);
 
@@ -192,10 +193,24 @@ public class MainActivity extends AppCompatActivity implements IabBroadcastRecei
             }
         });
 
-        //Ads setup
+        //Bottom banner setup
         mPublisherAdView = (AdView) findViewById(R.id.publisherAdView);
-        AdRequest adRequest = new AdRequest.Builder().addTestDevice(android_id).build();
+        AdRequest adRequest = new AdRequest.Builder().addTestDevice("B0CE4250758AE4B5BA9A7A7D491F75B3").build();
         mPublisherAdView.loadAd(adRequest);
+
+        //Interstitial Ads setup
+        mInterstitialAd = new InterstitialAd(this);
+        mInterstitialAd.setAdUnitId("ca-app-pub-1231118493223046/7273212411");
+
+        mInterstitialAd.setAdListener(new AdListener() {
+            @Override
+            public void onAdClosed() {
+                requestNewInterstitial();
+            }
+        });
+
+        requestNewInterstitial();
+
 
         //Setup dialog for fractions
         sumList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -456,8 +471,18 @@ public class MainActivity extends AppCompatActivity implements IabBroadcastRecei
 
     }
 
+    public void requestNewInterstitial() {
+        AdRequest adRequest = new AdRequest.Builder().addTestDevice("B0CE4250758AE4B5BA9A7A7D491F75B3").build();
+        mInterstitialAd.loadAd(adRequest);
+    }
+
     public void clear(View v) {
         operations.clear();
+
+        if (mInterstitialAd.isLoaded() && mInterstitialAd != null)
+            mInterstitialAd.show();
+
+
         TextView result = (TextView) findViewById(R.id.result);
         TextView yearSentenceText = (TextView) findViewById(R.id.year_sentence_main);
         TextView monthSentenceText = (TextView) findViewById(R.id.month_sentence_main);
@@ -528,9 +553,9 @@ public class MainActivity extends AppCompatActivity implements IabBroadcastRecei
      */
     public Action getIndexApiAction() {
         Thing object = new Thing.Builder()
-                .setName("Main Page") // TODO: Define a title for the content shown.
+                .setName("Ambar.tech") // TODO: Define a title for the content shown.
                 // TODO: Make sure this auto-generated URL is correct.
-                .setUrl(Uri.parse("http://[ENTER-YOUR-URL-HERE]"))
+                .setUrl(Uri.parse("http://ambar.tech"))
                 .build();
         return new Action.Builder(Action.TYPE_VIEW)
                 .setObject(object)
@@ -593,7 +618,7 @@ public class MainActivity extends AppCompatActivity implements IabBroadcastRecei
     IabHelper.OnIabPurchaseFinishedListener mPurchaseFinishedListener = new IabHelper.OnIabPurchaseFinishedListener() {
         public void onIabPurchaseFinished(IabResult result, Purchase purchase) {
             Log.d(TAG, "Purchase finished: " + result + ", purchase: " + purchase);
-//TODO substituir por string
+
             // if we were disposed of in the meantime, quit.
             if (mHelper == null) return;
 
@@ -677,7 +702,7 @@ public class MainActivity extends AppCompatActivity implements IabBroadcastRecei
         findViewById(R.id.activity_main).setVisibility(set ? View.GONE : View.VISIBLE);
         findViewById(R.id.screen_waiting).setVisibility(set ? View.VISIBLE : View.GONE);
 
-        if (!set){
+        if (!set) {
             findViewById(R.id.activity_main).setVisibility(View.VISIBLE);
             findViewById(R.id.screen_waiting).setVisibility(View.GONE);
         }
@@ -733,14 +758,15 @@ public class MainActivity extends AppCompatActivity implements IabBroadcastRecei
             setWaitScreen(false);
         }
     }
+
     @Override
-    public void onResume(){
+    public void onResume() {
         super.onResume();
         mPublisherAdView.resume();
     }
 
     @Override
-    public void onPause(){
+    public void onPause() {
         super.onPause();
         mPublisherAdView.pause();
     }
