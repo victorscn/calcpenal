@@ -44,16 +44,6 @@
                 android:text="@string/menu_about"
                 android:textColor="@color/white" />
 
-
-            <ImageButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginRight="4dp"
-                android:background="@null"
-                android:padding="12dp"
-                android:onClick="showBuy"
-                android:src="@drawable/ic_monetization_on_24px" />
         </LinearLayout>
 
     </android.support.v7.widget.Toolbar>
