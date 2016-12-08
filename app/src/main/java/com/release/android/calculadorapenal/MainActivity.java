@@ -60,8 +60,6 @@ public class MainActivity extends AppCompatActivity implements IabBroadcastRecei
     private InterstitialAd mInterstitialAd;
 
     //SKUs for the no ads version
-    //TODO: alterar para noads
-
     static final String SKU_NOADS = "noads";
 
     // (arbitrary) request code for the purchase flow
@@ -91,19 +89,16 @@ public class MainActivity extends AppCompatActivity implements IabBroadcastRecei
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        //TODO will it need a loadData()?
-
         //Initialize the Mobile Ads SDK
         MobileAds.initialize(this, "ca-app-pub-1231118493223046~4446000418");
 
         //app-specific public key
-        String base64EncodedPublicKey = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAyyQXyuhUy7IOCrZx2I++hsQxdqQzTJhvSSe1T2ZWrDhFRlCF0pEMMsljpUNVg3xTuVQcy4P64DQqyqxkxq/LayOJkmfvpe9eHBOVtpaMrCYTSlgoJZTqhEDBDQVtBTuzurUR3iQZklDQ4uJmUPFXwOtU7xuG/dv8i4GGr1bk+tuZmFZMjqZsm7yYnD/rAKlmZH09iHJ0k448w5M20qPLmWAUNI9lON4Ed+HXwU2mi+GJPQGuKVdPl3gwmrRoCkaNuaMIfbgh/ON6avGGYv3abHiUuNYsKiXQoaVJ5pQAu7XJ1JT+G2GO6D/PQ+iZF243W2j+0ujr8ROODLi8gmEIPQIDAQAB";
+        String base64EncodedPublicKey = "MIIBIjANBgkqhkiG9w0BA" + middleBit() + "xkxq/LayOJkmfvpe9eHBOVtpaMrCYTSlgoJZTqhEDBDQVtBTuzurUR3iQZklDQ4uJmUPFXwOtU7xuG/dv8i4GGr1bk+tuZm" + endBit("FZMjqZsm7yYnD/rAKlmZH09iHJ0k448w5M20qPLmWAUNI9lON4Ed+HXwU2mi+GJPQGuKVdPl3gwmrRoCkaNuaMIfbgh/ON6avGGYv3abHiUuNYsKiXQoa");
 
         // Create the helper, passing it our context and the public key to verify signatures with
         mHelper = new IabHelper(this, base64EncodedPublicKey);
 
-        //TODO set to false when release
-        mHelper.enableDebugLogging(true);
+        mHelper.enableDebugLogging(false);
 
         //Start setup
         Log.d(TAG, "Starting setup.");
@@ -120,13 +115,6 @@ public class MainActivity extends AppCompatActivity implements IabBroadcastRecei
                 // Have we been disposed of in the meantime? If so, quit.
                 if (mHelper == null) return;
 
-                // TODO Important: Dynamically register for broadcast messages about updated purchases.
-                // We register the receiver here instead of as a <receiver> in the Manifest
-                // because we always call getPurchases() at startup, so therefore we can ignore
-                // any broadcasts sent while the app isn't running.
-                // Note: registering this listener in an Activity is a bad idea, but is done here
-                // because this is a SAMPLE. Regardless, the receiver must be registered after
-                // IabHelper is setup, but before first call to getPurchases().
                 mBroadcastReceiver = new IabBroadcastReceiver(MainActivity.this);
                 IntentFilter broadcastFilter = new IntentFilter(IabBroadcastReceiver.ACTION);
                 registerReceiver(mBroadcastReceiver, broadcastFilter);
@@ -195,7 +183,7 @@ public class MainActivity extends AppCompatActivity implements IabBroadcastRecei
 
         //Bottom banner setup
         mPublisherAdView = (AdView) findViewById(R.id.publisherAdView);
-        AdRequest adRequest = new AdRequest.Builder().addTestDevice("B0CE4250758AE4B5BA9A7A7D491F75B3").build();
+        AdRequest adRequest = new AdRequest.Builder().build();
         mPublisherAdView.loadAd(adRequest);
 
         //Interstitial Ads setup
@@ -472,14 +460,14 @@ public class MainActivity extends AppCompatActivity implements IabBroadcastRecei
     }
 
     public void requestNewInterstitial() {
-        AdRequest adRequest = new AdRequest.Builder().addTestDevice("B0CE4250758AE4B5BA9A7A7D491F75B3").build();
+        AdRequest adRequest = new AdRequest.Builder().build();
         mInterstitialAd.loadAd(adRequest);
     }
 
     public void clear(View v) {
         operations.clear();
 
-        if (mInterstitialAd.isLoaded() && mInterstitialAd != null)
+        if (mInterstitialAd.isLoaded() && mInterstitialAd != null && !mIsNoAds)
             mInterstitialAd.show();
 
 
@@ -553,8 +541,7 @@ public class MainActivity extends AppCompatActivity implements IabBroadcastRecei
      */
     public Action getIndexApiAction() {
         Thing object = new Thing.Builder()
-                .setName("Ambar.tech") // TODO: Define a title for the content shown.
-                // TODO: Make sure this auto-generated URL is correct.
+                .setName("Ambar")
                 .setUrl(Uri.parse("http://ambar.tech"))
                 .build();
         return new Action.Builder(Action.TYPE_VIEW)
@@ -653,29 +640,6 @@ public class MainActivity extends AppCompatActivity implements IabBroadcastRecei
     boolean verifyDeveloperPayload(Purchase p) {
         String payload = p.getDeveloperPayload();
 
-        /*
-         * TODO: verify that the developer payload of the purchase is correct. It will be
-         * the same one that you sent when initiating the purchase.
-         *
-         * WARNING: Locally generating a random string when starting a purchase and
-         * verifying it here might seem like a good approach, but this will fail in the
-         * case where the user purchases an item on one device and then uses your app on
-         * a different device, because on the other device you will not have access to the
-         * random string you originally generated.
-         *
-         * So a good developer payload has these characteristics:
-         *
-         * 1. If two different users purchase an item, the payload is different between them,
-         *    so that one user's purchase can't be replayed to another user.
-         *
-         * 2. The payload must be such that you can verify it even when the app wasn't the
-         *    one who initiated the purchase flow (so that items purchased by the user on
-         *    one device work on other devices owned by the user).
-         *
-         * Using your own server to store and verify developer payloads across app
-         * installations is recommended.
-         */
-
         return true;
     }
 
@@ -697,15 +661,10 @@ public class MainActivity extends AppCompatActivity implements IabBroadcastRecei
 
     }
 
-    //TODO Enables or disables the please wait screen
     void setWaitScreen(boolean set) {
         findViewById(R.id.activity_main).setVisibility(set ? View.GONE : View.VISIBLE);
         findViewById(R.id.screen_waiting).setVisibility(set ? View.VISIBLE : View.GONE);
 
-        if (!set) {
-            findViewById(R.id.activity_main).setVisibility(View.VISIBLE);
-            findViewById(R.id.screen_waiting).setVisibility(View.GONE);
-        }
     }
 
     // Listener that's called when we finish querying the items and subscriptions we own
@@ -758,6 +717,21 @@ public class MainActivity extends AppCompatActivity implements IabBroadcastRecei
             setWaitScreen(false);
         }
     }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        Log.d(TAG, "onActivityResult(" + requestCode + "," + resultCode + "," + data);
+
+        // Pass on the activity result to the helper for handling
+        if (!mHelper.handleActivityResult(requestCode, resultCode, data)) {
+            // not handled, so handle it ourselves (here's where you'd
+            // perform any handling of activity results not related to in-app
+            // billing...
+            super.onActivityResult(requestCode, resultCode, data);
+        }
+        else {
+            Log.d(TAG, "onActivityResult handled by IABUtil.");
+        }
+    }
 
     @Override
     public void onResume() {
@@ -771,4 +745,11 @@ public class MainActivity extends AppCompatActivity implements IabBroadcastRecei
         mPublisherAdView.pause();
     }
 
+    private String middleBit(){
+
+        return "QEFAAOCAQ8AMIIBCgKCAQEAyyQXyuhUy7IOCrZx2I++hsQxdqQzTJhvSSe1T2ZWrDhFRlCF0pEMMsljpUNVg3xTuVQcy4P64DQqyq";
+    }
+
+    private String endBit(String initial){
+        return initial+"VJ5pQAu7XJ1JT+G2GO6D/PQ+iZF243W2j+0ujr8ROODLi8gmEIPQIDAQAB";}
 }
