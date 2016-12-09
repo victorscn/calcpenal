@@ -108,7 +108,7 @@ public class MainActivity extends AppCompatActivity implements IabBroadcastRecei
 
                 if (!result.isSuccess()) {
                     // Oh noes, there was a problem.
-                    complain("Problem setting up in-app billing: " + result);
+                    complain("Problema iniciando compra in-app: " + result);
                     return;
                 }
 
@@ -124,7 +124,7 @@ public class MainActivity extends AppCompatActivity implements IabBroadcastRecei
                 try {
                     mHelper.queryInventoryAsync(mGotInventoryListener);
                 } catch (IabAsyncInProgressException e) {
-                    complain("Error querying inventory. Another async operation in progress.");
+                    complain("Erro carregando inventário. Outra operação em progresso.");
                 }
             }
         });
@@ -572,7 +572,7 @@ public class MainActivity extends AppCompatActivity implements IabBroadcastRecei
 
     void complain(String message) {
         e(TAG, "**** CalculadoraPenal Error: " + message);
-        alert("Erro: " + message);
+        alert(message);
     }
 
     @Override
@@ -604,18 +604,18 @@ public class MainActivity extends AppCompatActivity implements IabBroadcastRecei
 
     IabHelper.OnIabPurchaseFinishedListener mPurchaseFinishedListener = new IabHelper.OnIabPurchaseFinishedListener() {
         public void onIabPurchaseFinished(IabResult result, Purchase purchase) {
-            Log.d(TAG, "Purchase finished: " + result + ", purchase: " + purchase);
+            Log.d(TAG, "Compra concluída: " + result + ", compra: " + purchase);
 
             // if we were disposed of in the meantime, quit.
             if (mHelper == null) return;
 
             if (result.isFailure()) {
-                complain("Error purchasing: " + result);
+                complain("Erro na compra: " + result);
                 setWaitScreen(false);
                 return;
             }
             if (!verifyDeveloperPayload(purchase)) {
-                complain("Error purchasing. Authenticity verification failed.");
+                complain("Erro. Falha na verificação de autenticidade .");
                 setWaitScreen(false);
                 return;
             }
@@ -625,7 +625,7 @@ public class MainActivity extends AppCompatActivity implements IabBroadcastRecei
             if (purchase.getSku().equals(SKU_NOADS)) {
                 // bought the premium upgrade!
                 Log.d(TAG, "Purchase is NoAds upgrade. Congratulating user.");
-                alert("Obrigado por comprar a versão NoAds!");
+                alert("Obrigado por adquirir a versão NoAds!");
                 mIsNoAds = true;
                 updateUi();
                 setWaitScreen(false);
@@ -650,7 +650,7 @@ public class MainActivity extends AppCompatActivity implements IabBroadcastRecei
         try {
             mHelper.queryInventoryAsync(mGotInventoryListener);
         } catch (IabAsyncInProgressException e) {
-            complain("Error querying inventory. Another async operation in progress.");
+            complain("Erro obtendo inventário. Outra operação em progresso.");
         }
     }
 
@@ -677,7 +677,7 @@ public class MainActivity extends AppCompatActivity implements IabBroadcastRecei
 
             // Is it a failure?
             if (result.isFailure()) {
-                complain("Failed to query inventory: " + result);
+                complain("Falha obtendo inventário: " + result);
                 return;
             }
 
@@ -704,16 +704,13 @@ public class MainActivity extends AppCompatActivity implements IabBroadcastRecei
         Log.d(TAG, "NoAds button clicked; launching purchase flow for NoAds");
         setWaitScreen(true);
 
-        /* TODO: for security, generate your payload here for verification. See the comments on
-         *        verifyDeveloperPayload() for more info. Since this is a SAMPLE, we just use
-         *        an empty string, but on a production app you should carefully generate this. */
         String payload = "";
 
         try {
             mHelper.launchPurchaseFlow(this, SKU_NOADS, RC_REQUEST,
                     mPurchaseFinishedListener, payload);
         } catch (IabAsyncInProgressException e) {
-            complain("Error launching purchase flow. Another async operation in progress.");
+            complain("Erro iniciando o fluxo de compra. Outra operação em progresso.");
             setWaitScreen(false);
         }
     }
